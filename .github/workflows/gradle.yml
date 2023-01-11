@@ -7,7 +7,11 @@
 
 name: Run Gradle on PRs
 
-on: pull_request
+on:
+  push:
+    branches: "master"
+  pull_request:
+    branches: "master"
 jobs:
   gradle:
     strategy:
