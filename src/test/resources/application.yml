@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    vault:
+      enabled: false
+
+  jpa:
+    show-sql: true
