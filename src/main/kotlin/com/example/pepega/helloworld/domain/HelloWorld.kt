@@ -13,14 +13,12 @@ import java.util.UUID
 @Entity
 @Table(name = "Foo")
 class HelloWorld (
-    name: String
+    @Column
+    val name: String
 ) : Persistable<UUID> {
 
     @Id
     private val id: UUID = UUID.randomUUID()
-
-    @Column
-    var name: String = name
 
     @Column
     var age: Int = 0
