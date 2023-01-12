@@ -9,9 +9,7 @@ import java.util.Objects
 import java.util.UUID
 
 @MappedSuperclass
-class CommonEntity(
-
-) : Persistable<UUID> {
+class CommonEntity : Persistable<UUID> {
 
     @Id
     private val id: UUID = UUID.randomUUID()
