@@ -1,6 +1,8 @@
 package com.example.pepega.helloworld
 
+import com.example.pepega.helloworld.domain.BoringHelloWorld
 import com.example.pepega.helloworld.domain.HelloWorld
+import com.example.pepega.helloworld.repository.BoringHelloWorldRepository
 import com.example.pepega.helloworld.repository.HelloWorldRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -47,5 +49,27 @@ class EntityManagerTest {
         person2.age = 20
 
         assertTrue(person1 == person2)
+    }
+
+    @Test
+    fun `Entity와 영속화한 Entity를 비교하면 Hibernate Proxy가 발생한다`(
+        @Autowired
+        helloWorldRepository: HelloWorldRepository,
+
+        @Autowired
+        boringHelloWorldRepository: BoringHelloWorldRepository
+    ) {
+
+        val helloWorld = HelloWorld("nikita")
+        val boringHelloWorld =
+            BoringHelloWorld("tranth", helloWorld)
+
+        helloWorldRepository.save(helloWorld)
+        boringHelloWorldRepository.save(boringHelloWorld)
+
+        val actual = boringHelloWorldRepository.findById(
+            boringHelloWorld.id).get()
+
+        assertTrue(helloWorld == actual.helloWorld)
     }
 }

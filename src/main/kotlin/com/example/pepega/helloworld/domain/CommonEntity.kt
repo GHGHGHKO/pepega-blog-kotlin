@@ -4,6 +4,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import jakarta.persistence.PostLoad
 import jakarta.persistence.PostPersist
+import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.domain.Persistable
 import java.util.Objects
 import java.util.UUID
@@ -26,11 +27,20 @@ class CommonEntity : Persistable<UUID> {
             return false
         }
 
-        if (this::class != other::class) {
+        if (other !is HibernateProxy &&
+            this::class != other::class) {
             return false
         }
 
-        return id == (other as HelloWorld).id
+        return id == getIdentifier(other)
+    }
+
+    private fun getIdentifier(obj: Any): Any? {
+        return if (obj is HibernateProxy) {
+            obj.hibernateLazyInitializer.identifier
+        } else {
+            (obj as CommonEntity).id
+        }
     }
 
     override fun hashCode() = Objects.hashCode(id)
