@@ -1,11 +1,13 @@
 package com.example.pepega.common.domain
 
+import com.example.pepega.helloworld.domain.CommonEntity
 import com.example.pepega.helloworld.domain.HelloWorld
 import jakarta.persistence.Column
 import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import jakarta.persistence.PostLoad
 import jakarta.persistence.PostPersist
+import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.domain.Persistable
 import java.time.LocalDateTime
@@ -38,11 +40,20 @@ abstract class BaseEntity : Persistable<UUID> {
             return false
         }
 
-        if (this::class != other::class) {
+        if (other !is HibernateProxy &&
+            this::class != other::class) {
             return false
         }
 
-        return id == (other as HelloWorld).id
+        return id == getIdentifier(other)
+    }
+
+    private fun getIdentifier(obj: Any): Any? {
+        return if (obj is HibernateProxy) {
+            obj.hibernateLazyInitializer.identifier
+        } else {
+            (obj as CommonEntity).id
+        }
     }
 
     override fun hashCode() = Objects.hashCode(id)
