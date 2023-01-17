@@ -12,26 +12,26 @@ import jakarta.persistence.Table
 @Table(name = "user_master")
 class UserMaster(
 
-    @Column(unique = true, length = 100)
+    @Column(unique = true, length = 100, nullable = false)
     val email: String,
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     val password: String,
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     val nickName: String,
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     val createUser: String,
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     val updateUser: String,
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name = "user_master_rules",
         joinColumns = [JoinColumn(name = "user_master_id")])
-    @Column
+    @Column(nullable = false)
     val roles: MutableList<String>
 
 ) : BaseEntity()
