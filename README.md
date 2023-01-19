@@ -10,5 +10,5 @@ https://pepega.tistory.com/58
 Kotlin Springboot Rest API 만들기 3 - Entity 만들기  
 https://pepega.tistory.com/59
 
-Kotlin Springboot Rest API 만들기 4 - 로그인, 회원가입, common response body 만들기  
+Kotlin Springboot Rest API 만들기 4 - 회원가입, common response body 만들기  
 https://pepega.tistory.com/60
