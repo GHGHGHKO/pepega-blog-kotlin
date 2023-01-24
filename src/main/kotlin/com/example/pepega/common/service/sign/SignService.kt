@@ -2,7 +2,7 @@ package com.example.pepega.common.service.sign
 
 import com.example.pepega.common.advice.UserExistExceptionCustom
 import com.example.pepega.common.domain.UserMaster
-import com.example.pepega.common.dto.sign.SignUpRequestDto
+import com.example.pepega.common.dto.sign.request.SignUpRequestDto
 import com.example.pepega.common.repository.UserMasterRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

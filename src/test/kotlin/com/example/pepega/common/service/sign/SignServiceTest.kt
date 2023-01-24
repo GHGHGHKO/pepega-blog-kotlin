@@ -1,6 +1,6 @@
 package com.example.pepega.common.service.sign
 
-import com.example.pepega.common.dto.sign.SignUpRequestDto
+import com.example.pepega.common.dto.sign.request.SignUpRequestDto
 import com.example.pepega.common.repository.UserMasterRepository
 import org.junit.jupiter.api.Assertions.assertNotEquals
 

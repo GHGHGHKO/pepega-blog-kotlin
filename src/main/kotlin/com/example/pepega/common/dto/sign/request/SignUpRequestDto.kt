@@ -1,4 +1,4 @@
-package com.example.pepega.common.dto.sign
+package com.example.pepega.common.dto.sign.request
 
 import jakarta.validation.constraints.Email
 

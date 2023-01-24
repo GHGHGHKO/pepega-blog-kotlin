@@ -1,6 +1,6 @@
 package com.example.pepega.common.controller
 
-import com.example.pepega.common.dto.sign.SignUpRequestDto
+import com.example.pepega.common.dto.sign.request.SignUpRequestDto
 import com.example.pepega.common.model.response.CommonResult
 import com.example.pepega.common.service.response.ResponseService
 import com.example.pepega.common.service.sign.SignService
