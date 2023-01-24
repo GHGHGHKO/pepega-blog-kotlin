@@ -4,11 +4,13 @@ import com.example.pepega.common.advice.UserExistExceptionCustom
 import com.example.pepega.common.domain.UserMaster
 import com.example.pepega.common.dto.sign.SignUpRequestDto
 import com.example.pepega.common.repository.UserMasterRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class SignService(
-    private val userMasterRepository: UserMasterRepository
+    private val userMasterRepository: UserMasterRepository,
+    private val passwordEncoder: PasswordEncoder
 ) {
     fun signUp(signUpRequestDto: SignUpRequestDto) {
         val user = userMasterRepository.findByEmail(signUpRequestDto.email)
@@ -23,7 +25,7 @@ class SignService(
         userMasterRepository.save(
             UserMaster(
                 email = signUpRequestDto.email,
-                password = signUpRequestDto.password,
+                password = passwordEncoder.encode(signUpRequestDto.password),
                 nickName = signUpRequestDto.nickname,
                 createUser = SIGN_UP_SERVICE_NAME,
                 updateUser = SIGN_UP_SERVICE_NAME,
