@@ -1,4 +1,4 @@
-package com.example.pepega.common.config
+package com.example.pepega.common.config.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
