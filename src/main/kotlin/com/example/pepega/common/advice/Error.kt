@@ -10,3 +10,5 @@ sealed class IOError : Error, RuntimeException {
 }
 
 class UserExistExceptionCustom : IOError()
+class UserNotFoundExceptionCustom : IOError()
+class PasswordNotMatchExceptionCustom : IOError()

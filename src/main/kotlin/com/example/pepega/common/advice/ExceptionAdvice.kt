@@ -44,6 +44,24 @@ class ExceptionAdvice(
                 getMessage("existingUser.message")))
     }
 
+    @ExceptionHandler(value = [UserNotFoundExceptionCustom::class])
+    fun userNotFoundException(): ResponseEntity<CommonResult> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(responseService.failResult(
+                getMessage("userNotFound.code").toInt(),
+                getMessage("userNotFound.message")))
+    }
+
+    @ExceptionHandler(value = [PasswordNotMatchExceptionCustom::class])
+    fun passwordNotMatchException(): ResponseEntity<CommonResult> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(responseService.failResult(
+                getMessage("passwordNotFound.code").toInt(),
+                getMessage("passwordNotFound.message")))
+    }
+
     private fun getMessage(code: String): String {
         return messageSource.getMessage(code, null,
             LocaleContextHolder.getLocale())
