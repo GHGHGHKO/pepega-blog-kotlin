@@ -37,6 +37,24 @@ class JwtTokenProvider {
         return request.getHeader(TOKEN_HEADER_NAME)
     }
 
+    fun validateToken(jwtToken: String): Boolean {
+        return try {
+            val claimsJws = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(jwtToken)
+
+            claimsJws
+                .body
+                .expiration
+                .after(Date())
+
+        } catch (e: Exception) {
+            println(e)
+            false
+        }
+    }
+
     companion object {
         private const val TOKEN_VALID_MILLISECOND = 1000L * 60 * 60
         private const val TOKEN_HEADER_NAME = "X-AUTH-TOKEN"
