@@ -55,6 +55,14 @@ class JwtTokenProvider {
         }
     }
 
+    fun userPrimaryKey(jwtToken: String): String {
+        return Jwts.parserBuilder()
+            .setSigningKey(secretKey).build()
+            .parseClaimsJws(jwtToken)
+            .body
+            .subject
+    }
+
     companion object {
         private const val TOKEN_VALID_MILLISECOND = 1000L * 60 * 60
         private const val TOKEN_HEADER_NAME = "X-AUTH-TOKEN"
