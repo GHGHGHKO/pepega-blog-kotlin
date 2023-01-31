@@ -4,6 +4,7 @@ import com.example.pepega.common.dto.jwt.TokenResponseDto
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.Date
@@ -32,7 +33,12 @@ class JwtTokenProvider {
         )
     }
 
+    fun resolveToken(request: HttpServletRequest): String? {
+        return request.getHeader(TOKEN_HEADER_NAME)
+    }
+
     companion object {
         private const val TOKEN_VALID_MILLISECOND = 1000L * 60 * 60
+        private const val TOKEN_HEADER_NAME = "X-AUTH-TOKEN"
     }
 }
