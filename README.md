@@ -13,5 +13,5 @@ https://pepega.tistory.com/59
 Kotlin Springboot Rest API 만들기 4 - 회원가입, common response body 만들기  
 https://pepega.tistory.com/60  
 
-Kotlin Springboot Rest API 만들기 5 - jwt token, Spring Security로 로그인 만들기  
+Kotlin Springboot Rest API 만들기 5 - jwt token, Spring Security로 인증 인가, 로그인 만들기  
 https://pepega.tistory.com/61  
