@@ -24,6 +24,8 @@ class SecurityConfig (
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/sign/*/signIn", "/sign/*/signUp").permitAll()
+            .requestMatchers("/users/**").hasRole("ADMIN")
+            .anyRequest().hasRole("USER")
             .and()
             .addFilterBefore(
                 JwtAuthenticationFilter(jwtTokenProvider),
