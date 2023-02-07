@@ -13,10 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
@@ -54,14 +51,15 @@ internal class SignControllerTest (
             password = "q035o9gj3590y!@#",
             nickname = "rickRoll")
 
-        mockMvc.perform(post("/sign/v1/signUp")
-            .content(objectMapper.writeValueAsString(signUpRequestDto))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk)
-            .andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.code").value(0))
-            .andExpect(jsonPath("$.message").exists())
+        mockMvc.post("/sign/v1/signUp") {
+            content = objectMapper.writeValueAsString(signUpRequestDto)
+            contentType = MediaType.APPLICATION_JSON
+        }
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+            .andExpect { jsonPath("$.success") { value(true) } }
+            .andExpect { jsonPath("$.code") { value(0) } }
+            .andExpect { jsonPath("$.message") { exists() } }
     }
 
     @Test
