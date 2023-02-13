@@ -88,4 +88,22 @@ internal class SignControllerTest (
             .andExpect { jsonPath("$.code") { value(0) } }
             .andExpect { jsonPath("$.message") { exists() } }
     }
+
+    @Test
+    fun `회원가입 시 이미 존재하는 계정이다`() {
+        val signUpRequestDto = SignUpRequestDto(
+            email = EXIST_EMAIL,
+            password = EXIST_PASSWORD,
+            nickname = EXIST_NICKNAME)
+
+        mockMvc.post("/sign/v1/signUp") {
+            content = objectMapper.writeValueAsString(signUpRequestDto)
+            contentType = MediaType.APPLICATION_JSON
+        }
+            .andDo { print() }
+            .andExpect { status { is4xxClientError() } }
+            .andExpect { jsonPath("$.success") { value(false) } }
+            .andExpect { jsonPath("$.code") { value(-1005) } }
+            .andExpect { jsonPath("$.message") { exists() } }
+    }
 }
