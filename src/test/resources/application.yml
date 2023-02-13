@@ -5,3 +5,6 @@ spring:
 
   jpa:
     show-sql: true
+
+  messages:
+    basename: i18n/exception

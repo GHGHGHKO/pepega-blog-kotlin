@@ -1,7 +1,8 @@
 package com.example.pepega.common.controller
 
+import com.example.pepega.common.dto.sign.request.SignInRequestDto
 import com.example.pepega.common.dto.sign.request.SignUpRequestDto
-import com.example.pepega.common.repository.UserMasterRepository
+import com.example.pepega.common.service.sign.SignService
 import com.fasterxml.jackson.databind.ObjectMapper
 
 import org.junit.jupiter.api.AfterEach
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
@@ -24,19 +24,27 @@ internal class SignControllerTest (
     val mockMvc: MockMvc,
 
     @Autowired
-    val userMasterRepository: UserMasterRepository,
+    val signService: SignService,
 
     @Autowired
-    val objectMapper: ObjectMapper,
-
-    @Autowired
-    val passwordEncoder: PasswordEncoder
+    val objectMapper: ObjectMapper
 ) {
+
+    companion object {
+        private const val EXIST_EMAIL = "existUser@real.com"
+        private const val EXIST_PASSWORD = "existPassword!@#s2"
+        private const val EXIST_NICKNAME = "patric"
+    }
 
     @BeforeEach
     fun setUp() {
+        val signUpRequestDto = SignUpRequestDto(
+            email = EXIST_EMAIL,
+            password = EXIST_PASSWORD,
+            nickname = EXIST_NICKNAME
+        )
 
-
+        signService.signUp(signUpRequestDto)
     }
 
     @AfterEach
@@ -63,6 +71,21 @@ internal class SignControllerTest (
     }
 
     @Test
-    fun signIn() {
+    fun `로그인 성공한다`() {
+
+        val signInRequestDto = SignInRequestDto(
+            email = EXIST_EMAIL,
+            password = EXIST_PASSWORD
+        )
+
+        mockMvc.post("/sign/v1/signIn") {
+            content = objectMapper.writeValueAsString(signInRequestDto)
+            contentType = MediaType.APPLICATION_JSON
+        }
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+            .andExpect { jsonPath("$.success") { value(true) } }
+            .andExpect { jsonPath("$.code") { value(0) } }
+            .andExpect { jsonPath("$.message") { exists() } }
     }
 }
