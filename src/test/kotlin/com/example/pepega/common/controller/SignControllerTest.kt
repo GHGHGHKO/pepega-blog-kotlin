@@ -106,4 +106,23 @@ internal class SignControllerTest (
             .andExpect { jsonPath("$.code") { value(-1005) } }
             .andExpect { jsonPath("$.message") { exists() } }
     }
+
+    @Test
+    fun `로그인 시 존재하지 않는 회원이다`() {
+
+        val signInRequestDto = SignInRequestDto(
+            email = "blahblah@tistory.com",
+            password = "1q2w3e4r!@#"
+        )
+
+        mockMvc.post("/sign/v1/signIn") {
+            content = objectMapper.writeValueAsString(signInRequestDto)
+            contentType = MediaType.APPLICATION_JSON
+        }
+            .andDo { print() }
+            .andExpect { status { is4xxClientError() } }
+            .andExpect { jsonPath("$.success") { value(false) } }
+            .andExpect { jsonPath("$.code") { value(-1000) } }
+            .andExpect { jsonPath("$.message") { exists() } }
+    }
 }
