@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.security.Key
 import java.util.Date
 
@@ -68,6 +69,7 @@ class JwtTokenProvider (
             .subject
     }
 
+    @Transactional
     fun userAuthentication(jwtToken: String): Authentication {
         val userDetails = userDetailsService
             .loadUserByUsername(userPrimaryKey(jwtToken))
