@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -60,6 +61,15 @@ class ExceptionAdvice(
             .body(responseService.failResult(
                 getMessage("passwordNotFound.code").toInt(),
                 getMessage("passwordNotFound.message")))
+    }
+
+    @ExceptionHandler(value = [AuthenticationException::class])
+    fun authenticationEntryPointException(): ResponseEntity<CommonResult> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(responseService.failResult(
+                getMessage("entryPointException.code").toInt(),
+                getMessage("entryPointException.message")))
     }
 
     private fun getMessage(code: String): String {

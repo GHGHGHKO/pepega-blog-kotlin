@@ -59,4 +59,17 @@ class ActuatorControllerTest(
             .andExpect { status { isOk() } }
             .andExpect { jsonPath("$._links") { exists() } }
     }
+
+    @Test
+    fun `토큰이 유효하지 않아서 오류가 발생한다`() {
+
+        mockMvc.get("/actuator") {
+            header(X_AUTH_TOKEN, token + "malfunction")
+        }
+            .andDo { print() }
+            .andExpect { status { is4xxClientError() } }
+            .andExpect { jsonPath("$.success") { value(false) } }
+            .andExpect { jsonPath("$.code") { value(-1002) } }
+            .andExpect { jsonPath("$.message") { exists() } }
+    }
 }
