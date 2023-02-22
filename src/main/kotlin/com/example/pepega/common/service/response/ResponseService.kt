@@ -1,6 +1,7 @@
 package com.example.pepega.common.service.response
 
 import com.example.pepega.common.model.response.CommonResult
+import com.example.pepega.common.model.response.MutableListResult
 import com.example.pepega.common.model.response.SingleResult
 import org.springframework.stereotype.Service
 
@@ -22,6 +23,16 @@ class ResponseService {
             code = common.code,
             message = common.message,
             data = data
+        )
+    }
+
+    fun <T> mutableListResult(results: MutableList<T>): MutableListResult<T> {
+        val common = successResult()
+        return MutableListResult(
+            common.success,
+            common.code,
+            common.message,
+            results
         )
     }
 }
