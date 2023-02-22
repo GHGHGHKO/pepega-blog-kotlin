@@ -61,6 +61,17 @@ class ActuatorControllerTest(
     }
 
     @Test
+    fun `health 호출 성공한다`() {
+
+        mockMvc.get("/actuator/health") {
+            header(X_AUTH_TOKEN, token)
+        }
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+            .andExpect { jsonPath("$.status") { exists() } }
+    }
+
+    @Test
     fun `토큰이 유효하지 않아서 오류가 발생한다`() {
 
         mockMvc.get("/actuator") {
