@@ -95,4 +95,25 @@ internal class UserControllerTest (
             .andExpect { jsonPath("$.results") { isArray() } }
             .andExpect { jsonPath("$.results.length()") { value(6) } }
     }
+
+    @Test
+    fun `권한 문제로 유저 정보를 가져오지 못한다`() {
+
+        val signInRequestDto = SignInRequestDto(
+            email = ID + 0 + EMAIL,
+            password = PASSWORD
+        )
+
+        token = signService.signIn(signInRequestDto).token
+
+        mockMvc.get("/users/v1") {
+            contentType = MediaType.APPLICATION_JSON
+            header(X_AUTH_TOKEN, token)
+        }
+            .andDo { print() }
+            .andExpect { status { is4xxClientError() } }
+            .andExpect { jsonPath("$.success") { value(false) } }
+            .andExpect { jsonPath("$.code") { value(-1003) } }
+            .andExpect { jsonPath("$.message") { exists() } }
+    }
 }
