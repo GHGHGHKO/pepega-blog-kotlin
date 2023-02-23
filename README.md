@@ -15,3 +15,6 @@ https://pepega.tistory.com/60
 
 Kotlin Springboot Rest API 만들기 5 - jwt token, Spring Security로 인증 인가, 로그인 만들기  
 https://pepega.tistory.com/61  
+
+Kotlin Springboot Rest API 만들기 6 - 테스트 코드 작성, exception handling, Spring Security 인증 인가 적용하기  
+https://pepega.tistory.com/62
