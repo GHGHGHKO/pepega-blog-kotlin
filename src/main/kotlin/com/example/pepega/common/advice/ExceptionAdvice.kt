@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
@@ -66,10 +67,19 @@ class ExceptionAdvice(
     @ExceptionHandler(value = [AuthenticationException::class])
     fun authenticationEntryPointException(): ResponseEntity<CommonResult> {
         return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
+            .status(HttpStatus.FORBIDDEN)
             .body(responseService.failResult(
                 getMessage("entryPointException.code").toInt(),
                 getMessage("entryPointException.message")))
+    }
+
+    @ExceptionHandler(value = [AccessDeniedException::class])
+    fun accessDeniedException(): ResponseEntity<CommonResult> {
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(responseService.failResult(
+                getMessage("accessDenied.code").toInt(),
+                getMessage("accessDenied.message")))
     }
 
     private fun getMessage(code: String): String {
