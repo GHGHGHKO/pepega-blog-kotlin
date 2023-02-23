@@ -69,7 +69,7 @@ internal class UserControllerTest (
 
         token = signService.signIn(signInRequestDto).token
 
-        for (i in 0..5) {
+        for (i in 0..4) {
             val signUpRequestDto = SignUpRequestDto(
                 email = ID + i + EMAIL,
                 password = PASSWORD,
@@ -92,6 +92,7 @@ internal class UserControllerTest (
             .andExpect { jsonPath("$.success") { value(true) } }
             .andExpect { jsonPath("$.code") { value(0) } }
             .andExpect { jsonPath("$.message") { exists() } }
-            .andExpect { jsonPath("$.results") { isNotEmpty() } }
+            .andExpect { jsonPath("$.results") { isArray() } }
+            .andExpect { jsonPath("$.results.length()") { value(6) } }
     }
 }
