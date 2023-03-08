@@ -32,4 +32,6 @@ jobs:
       run: chmod +x ./gradlew
     
     - name: Execute Gradle build
+      env:
+        tenor_key: ${{ secrets.TENOR_KEY }}
       run: ./gradlew build
