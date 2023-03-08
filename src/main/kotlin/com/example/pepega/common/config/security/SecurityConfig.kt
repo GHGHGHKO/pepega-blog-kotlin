@@ -25,7 +25,7 @@ class SecurityConfig (
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/sign/*/signIn", "/sign/*/signUp").permitAll()
+            .requestMatchers("/sign/*/signIn", "/sign/*/signUp", "/tenor/**").permitAll()
             .requestMatchers("/users/**").hasRole("ADMIN")
             .anyRequest().hasRole("USER")
             .and()

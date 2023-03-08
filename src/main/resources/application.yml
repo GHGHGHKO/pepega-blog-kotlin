@@ -5,3 +5,7 @@ spring:
 
   messages:
     basename: i18n/exception
+
+tenor:
+  url: https://tenor.googleapis.com
+  key: insert-your-key
