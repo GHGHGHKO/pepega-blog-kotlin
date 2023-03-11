@@ -26,6 +26,7 @@ extra["springCloudVersion"] = "2022.0.0"
 extra["testcontainersVersion"] = "1.17.6"
 
 dependencies {
+	implementation("io.github.microutils:kotlin-logging:3.0.5")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")

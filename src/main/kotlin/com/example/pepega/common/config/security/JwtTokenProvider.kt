@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
+import mu.KotlinLogging
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -17,7 +18,7 @@ import java.util.Date
 class JwtTokenProvider (
     private val userDetailsService: UserDetailsService
 ) {
-
+    private val log = KotlinLogging.logger {}
     val secretKey: Key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
 
     fun createToken(
@@ -56,7 +57,7 @@ class JwtTokenProvider (
                 .after(Date())
 
         } catch (e: Exception) {
-            println(e)
+            log.error{ e }
             false
         }
     }

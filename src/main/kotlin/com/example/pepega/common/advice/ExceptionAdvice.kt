@@ -3,6 +3,7 @@ package com.example.pepega.common.advice
 import com.example.pepega.common.model.response.CommonResult
 import com.example.pepega.common.service.response.ResponseService
 import jakarta.servlet.http.HttpServletRequest
+import mu.KotlinLogging
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
@@ -18,14 +19,14 @@ class ExceptionAdvice(
     private val responseService: ResponseService,
     private val messageSource: MessageSource
 ) {
+    private val log = KotlinLogging.logger {}
 
     @ExceptionHandler(value = [Exception::class])
     @ResponseBody
     fun defaultException(request: HttpServletRequest, e: Exception
     ): ResponseEntity<CommonResult> {
 
-        // TODO logger
-        println("Exception endPoint: ${request.method} ${request.requestURI}, " +
+        log.error("Exception endPoint: ${request.method} ${request.requestURI}, " +
                 "queryString : ${request.queryString}, " +
                 "exception : $e")
 
